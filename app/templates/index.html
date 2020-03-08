@@ -1,0 +1,234 @@
+{% extends 'base_full.html' %}
+
+{% block title %}
+<title>区域经济数据分析可视化系统设计</title>
+{% endblock %}
+<!-- css start -->
+{% block css %}
+<style>
+    div {
+    display: block;
+}
+   .eco-wrapper {
+    color: #eef9fe;
+    clear: both;
+    height: 100%;
+}
+   .eco-wrapper .map-container {
+    position: absolute;
+    left: 0;
+    top: 54px;
+    bottom: 0;
+    right: 470px;
+}
+   .side-panel {
+    position: absolute;
+    top: 54px;
+    right: 0;
+    width: 470px;
+    background: #474a4f;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+   .eco-wrapper .panel2 {
+    color: #fff;
+}
+
+   .totalTop {
+       padding-top: 20px;
+       padding-bottom: 20px;
+       background: #34363b;
+   }
+   .buttonGroupContainer {
+    margin: 0;
+}
+   .eco-wrapper .panel2 {
+    color: #fff;
+}
+
+   .timeCurveContainer {
+    padding-top: 10px;
+    background: #34363b;
+    padding-bottom: 10px;
+   }
+   .eco-wrapper .panel2 .panel-content .listEcoContainer {
+        padding: 0 25px 25px;
+        background: #474a4f;
+    }
+   .eco-wrapper .panel2 .panel-content .listEcoContainer .topTitle {
+        color: #eef9fe;
+    }
+   .eco-wrapper .panel2 .panel-content .listEcoContainer .topTitle h4 {
+        font-weight: 400;
+    }
+   .eco-wrapper .title {
+        overflow: hidden;
+        height: 50px;
+        border-bottom: 1px solid #e8e8e8;
+    }
+   h4 ，h6{
+        display: block;
+        margin-block-start: 1.33em;
+        margin-block-end: 1.33em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+    }
+
+
+     table {
+        display: table;
+    }
+    .eco-wrapper .panel2 .panel-content .listEcoContainer table tr {
+    vertical-align: top;
+}
+   tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+   .eco-wrapper .panel2 .panel-content .listEcoContainer th {
+    vertical-align: middle;
+    font-weight: 400;
+}
+
+   td, th {
+    display: table-cell;
+    vertical-align: inherit;
+}
+   .list-rank-sub, .list-rank-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+    .list-rank-icon {
+       display: inline-block;
+       background: #e75843;
+       color: #fff;
+       margin-right: 5px;
+       border-radius: 4px;
+       font-size: 12px;
+       width: auto;
+        min-width: 16px;
+       height: 16px;
+       line-height: 16px;
+       text-align: center;
+       box-sizing: border-box;
+   }
+    .list-rank-sub {
+    color: #999;
+    margin: 8px 0 10px;
+    height: 14px;
+}
+    .list-rank-sub, .list-rank-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+    #allmap {
+        height: 100%;
+    }
+    .economic {
+        display: none;
+        position: relative;
+        z-index: 9999;
+        background-color: #121;
+        width: 500px;
+    }
+    .economic span {
+        cursor: pointer;
+    }
+    #main {
+        width: 500px;
+        height: 500px;
+    }
+</style>
+{% endblock %}
+<!-- css end -->
+
+{% block content %}
+<div class="eco-wrapper">
+    <div class="map-container">
+        <div style="height: 100%;position: relative">
+            <div id="allmap"></div>
+        </div>
+    </div>
+    <div class="side-panel">
+        <div class="panel2">
+            <div class="panel-content">
+                <div class="totolTop">
+                    <div class="buttonGroupContainer">
+                        <div class="buttonGroup" style="padding: 1px 2px;border-radius: 4px">
+                            <div class="radio active" style="color: white;">
+                                数据
+                            </div>
+                            <div class="radio" style="color:white">
+                                图表
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="option">
+                    <select id="year">
+                        <option value="-1">请选择</option>
+                    </select>
+                    <select id="type">
+                        <option value="-1">请选择</option>
+                    </select>
+                    <select id="sub_type">
+                        <option value="-1">请选择</option>
+                    </select>
+                    <select id="chart" style="display: none;">
+                        <option value="line">折线图</option>
+                        <option value="bar">柱状图</option>
+                        <option value="pie">饼状图</option>
+                    </select>
+                </div>
+                <div class="ecoListContainer scroller">
+                    <div class="listEcoContainer"></div>
+                    <div class="chartContainer"><div id="main"></div></div>
+                    <div id="no-data">
+                        <div class="no-data-icon"></div>
+                        <p>暂无数据</p>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<div class="economic">
+</div>
+<input type="hidden" name="type">
+<input type="hidden" name="sub_type">
+<input type="hidden" name="city">
+<input type="hidden" name="index">
+{% endblock %}
+{% block script %}
+<script src="http://api.map.baidu.com/api?v=2.0&ak=in6XhrBGd3XdVIAuh4NoXP0liZi42Lum"></script>
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.js"></script>
+<script src="{{ url_for('static', filename='js/appv1.js') }}"></script>
+<script type="text/javascript">
+    // tab switch
+    var myclick = function(v) {
+        var llis = document.getElementsByTagName("li");
+        for(var i = 0; i < llis.length; i++) {
+            var lli = llis[i];
+            if(lli == document.getElementById("tab" + v)) {
+                lli.style.backgroundColor = "orange";
+            } else {
+                lli.style.backgroundColor = "gray";
+            }
+        }
+        var divs = document.getElementsByClassName("tab_css");
+        for(var i = 0; i < divs.length; i++) {
+            var divv = divs[i];
+            if(divv == document.getElementById("tab" + v + "_content")) {
+                divv.style.display = "block";
+            } else {
+                divv.style.display = "none";
+            }
+        }
+    };
+</script>
+
+{% endblock %}

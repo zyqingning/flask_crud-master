@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block title %}
+        <title>Login Page</title>
+    {% endblock %}
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <!--Custom styles-->
+    <!--<link rel="stylesheet" href="{{ url_for('static', filename='css/1.css') }}">-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/appv1.css') }}">
+    <style>
+{#        这个 css  不要移动到app.css 中#}
+        body {
+            background-image: url('{{ url_for('static', filename='123.jpg') }}');
+            background-size: cover;
+            background-repeat: no-repeat;
+            height: 100%;
+        }
+        .login-container {
+            position: relative;
+        }
+        .card{
+            position:absolute;
+            left:35%;
+            transform:translateX(-50%);
+            top:50%;
+            transform:translateY(-50%)
+        }
+    </style>
+</head>
+<body>
+    <header class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">区域经济数据可视化分析</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="mr-auto"></div>
+            <div class="my-2 mg-lg-0">
+                <a href="{{ url_for('web.login') }}" class="btn btn-primary">登录</a>
+            </div>
+        </div>
+    </nav>
+</header>
+{% block content %}
+<div class="container">
+	<div class="d-flex justify-content-center h-100">
+		<div class="card">
+			<div class="card-header">
+				<h3>注册</h3>
+				<div class="d-flex justify-content-end social_icon">
+					<span><i class="fab fa-facebook-square"></i></span>
+					<span><i class="fab fa-google-plus-square"></i></span>
+					<span><i class="fab fa-twitter-square"></i></span>
+				</div>
+			</div>
+			<div class="card-body">
+				<form action="" method="post">
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-user"></i></span>
+						</div>
+						<input type="text" name="nickname" class="form-control"
+                               value="{{ form.data['nickname'] | default('', True)}}" placeholder="username">
+
+					</div>
+                    <div class="input-group form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-key"></i></span>
+                        </div>
+                        <input type="password" name="password" class="form-control" placeholder="password">
+                    </div>
+					<div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-key"></i></span>
+						</div>
+						<input type="password" name="password_confirmed" class="form-control" placeholder="password confirmed">
+					</div>
+                    <div class="input-group form-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="fas fa-envelope"></i></span>
+						</div>
+						<input type="email" class="form-control" name="email"
+                               value="{{ form.data['email'] | default('', True)}}" placeholder="email">
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Sign up" class="btn float-right login_btn">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{#
+<footer>
+    footer
+</footer>#}
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+

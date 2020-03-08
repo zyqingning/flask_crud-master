@@ -1,0 +1,34 @@
+.locations {
+	cursor: pointer;
+}
+
+#location .wrapper .fa {
+	color: #fff;
+}
+#location .wrapper .swtich {
+	color: #e3654b;
+}
+
+.model {
+    max-height: 290px;
+    overflow: auto;
+    position: absolute;
+    top: 54px;
+    background: #384352;
+    padding: 10px 15px;
+    z-index: 1000;
+    left: 195px;
+    width: 300px;
+    font-size: 12px;
+    line-height: 28px;
+    color: #fff;
+    display: none;
+}
+.model .rml-city-btn {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 15px;
+}
+.model .rml-city-btn.active, .model .rml-city-btn:hover{
+    color: #e3654b;
+}

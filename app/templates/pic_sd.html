@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>散点图</title>
+	<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.js"></script>
+</head>
+<body>
+	<div id="main" style="width: 600px; height: 600px;"></div>
+	<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            xAxis: {},
+            yAxis: {},
+            series: [{
+                symbolSize: 20,
+                data: [
+                    [1, 8.04],
+                    [2, 6.95],
+                    [3, 7.58],
+                    [4, 8.81],
+                    [5, 8.33],
+                    [6, 9.96],
+                    [7, 7.24],
+                    [8, 4.26],
+                    [9, 10.84],
+                    [10, 4.82]
+                ],
+                type: 'scatter'
+            }]
+        };
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+</body>
+</html>
